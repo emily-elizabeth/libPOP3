@@ -117,7 +117,6 @@ on _POP3DataAvailable server, data
             break
          case "LIST"
             read from socket server until CRLF & "." & CRLF  with message "_POP3MessageListReceived"
-            //dispatch "POP3MessageListReceived" to callbackTargets[server] with server, buffer[server]
             break
          case "PASS"
             dispatch "POP3LoggedIn" to callbackTargets[server] with server
@@ -127,7 +126,6 @@ on _POP3DataAvailable server, data
             break
          case "RETR"
             read from socket server until CRLF & "." & CRLF with message "_POP3MessageRetrieved"
-            //dispatch "POP3MessageRetrieved" to callbackTargets[server] with server, buffer[server]
             break
          case "STAT"
             dispatch "POP3MessageCountReceived" to callbackTargets[server] with server, word 2 of data
@@ -138,6 +136,7 @@ on _POP3DataAvailable server, data
             break
       end switch
    else if (char 1 of data = "-") then  // we encountered an error
+      dispatch "POP3: Error with last command (" & word 1 of currentCommand[server] & ")" && word 2 to -1 of data
    end if
 end _POP3DataAvailable
 

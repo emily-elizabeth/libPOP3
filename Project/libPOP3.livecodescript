@@ -145,7 +145,7 @@ on _POP3DataAvailable server, data
             break
       end switch
    else if (char 1 of data = "-") then  // we encountered an error
-      dispatch "POP3Error" to callbackTargets[server] with "POP3: Error with last command (" & word 1 of currentCommand[server] & ")" && word 2 to -1 of data
+      dispatch "POP3Error" to callbackTargets[server] with server, "POP3: Error with last command (" & word 1 of currentCommand[server] & ")" && word 2 to -1 of data
    end if
 end _POP3DataAvailable
 

@@ -7,7 +7,8 @@ POP3Disconnect server
 POP3MessageCount server  
 POP3MessageList server  
 POP3DeleteMessage server, messageNumber  
-POP3RetrieveMessage server, messageNumber
+POP3RetrieveMessage server, messageNumber  
+POP3SendUsername server, username  
 
 ## Callbacks
 POP3Connected server  

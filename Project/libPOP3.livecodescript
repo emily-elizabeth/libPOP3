@@ -74,6 +74,15 @@ end POP3RetrieveMessage
 
 
 
+-- Sends the username, only use this if the username/password combination fails
+-- server is a fully qualified pointer to a socket (example.com:110|libPOP3)
+-- username is the username to try
+--
+on POP3SendUsername server, username
+   _POP3Write server, "USER" && username
+end POP3SendUsername
+
+
 ---- PRIVATE METHODS -----
 
 
@@ -136,7 +145,7 @@ on _POP3DataAvailable server, data
             break
       end switch
    else if (char 1 of data = "-") then  // we encountered an error
-      dispatch "POP3: Error with last command (" & word 1 of currentCommand[server] & ")" && word 2 to -1 of data
+      dispatch "POP3Error" to callbackTargets[server] with "POP3: Error with last command (" & word 1 of currentCommand[server] & ")" && word 2 to -1 of data
    end if
 end _POP3DataAvailable
 

@@ -6,6 +6,7 @@ POP3Connect server, isSecure, callbackTarget
 POP3Disconnect server  
 POP3MessageCount server  
 POP3MessageList server  
+POP3NOOP server  
 POP3DeleteMessage server, messageNumber  
 POP3RetrieveMessage server, messageNumber  
 POP3SendUsername server, username  
@@ -14,6 +15,7 @@ POP3SendUsername server, username
 POP3Connected server  
 POP3MessageDeleted server, messageNumber  
 POP3MessageListReceived server, messageList  
+POP3NOOPSuccessful server  
 POP3LoggedIn server  
 POP3Disconnected server
 POP3MessageRetrieved server, message  

@@ -83,6 +83,12 @@ on POP3SendUsername server, username
 end POP3SendUsername
 
 
+
+on POP3NOOP server
+   _POP3Write server, "NOOP"
+end POP3NOOP
+
+
 ---- PRIVATE METHODS -----
 
 
@@ -126,6 +132,9 @@ on _POP3DataAvailable server, data
             break
          case "LIST"
             read from socket server until CRLF & "." & CRLF  with message "_POP3MessageListReceived"
+            break
+         case "NOOP"
+            dispatch "POP3NOOPSuccessful" to callbackTargets[server] with server
             break
          case "PASS"
             dispatch "POP3LoggedIn" to callbackTargets[server] with server

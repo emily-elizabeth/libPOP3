@@ -89,6 +89,12 @@ on POP3NOOP server
 end POP3NOOP
 
 
+
+on POP3Top server, messageNumber, numberOfLines
+   _POP3Write server, "TOP" && messageNumber && numberOfLines
+end POP3Top
+
+
 ---- PRIVATE METHODS -----
 
 
@@ -148,6 +154,9 @@ on _POP3DataAvailable server, data
          case "STAT"
             dispatch "POP3MessageCountReceived" to callbackTargets[server] with server, word 2 of data
             break
+         case "TOP"
+            read from socket server until CRLF & "." & CRLF with message "_POP3TopReceived"
+            break
          case "USER"
             dispatch function "POP3PasswordRequested" to callbackTargets[server] with server
             _POP3Write server, "PASS" && the result
@@ -168,3 +177,8 @@ end _POP3MessageRetrieved
 on _POP3MessageListReceived server, data
    dispatch "POP3MessageListReceived" to callbackTargets[server] with server, data
 end _POP3MessageListReceived
+
+
+on _POP3TopReceived server, data
+   dispatch "POP3TopReceived" to callbackTargets[server] with server, data
+end _POP3TopReceived

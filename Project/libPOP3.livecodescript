@@ -95,6 +95,13 @@ on POP3Top server, messageNumber, numberOfLines
 end POP3Top
 
 
+
+on POP3Reset server
+   _POP3Write server, "RSET"
+end POP3Reset
+
+
+
 ---- PRIVATE METHODS -----
 
 
@@ -150,6 +157,9 @@ on _POP3DataAvailable server, data
             break
          case "RETR"
             read from socket server until CRLF & "." & CRLF with message "_POP3MessageRetrieved"
+            break
+         case "RSET"
+            dispatch "POP3ResetSuccessful" to callbackTargets[server] with server
             break
          case "STAT"
             dispatch "POP3MessageCountReceived" to callbackTargets[server] with server, word 2 of data
